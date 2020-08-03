@@ -1,0 +1,8 @@
+## MAVEN
+target/
+
+## INTELLIJ
+.idea
+*.iws
+*.iml
+*.ipr

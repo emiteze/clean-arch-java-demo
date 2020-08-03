@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=clean-arch-demo
+      - POSTGRES_USER=clean-arch-demo
+      - POSTGRES_PASSWORD=clean-arch-demo
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.165.70.0/16
