@@ -7,9 +7,20 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB=clean-arch-demo
-      - POSTGRES_USER=clean-arch-demo
-      - POSTGRES_PASSWORD=clean-arch-demo
+      - POSTGRES_DB=clean-arch-java-demo
+      - POSTGRES_USER=clean-arch-java-demo
+      - POSTGRES_PASSWORD=clean-arch-java-demo
+    networks:
+      - custom
+
+  stubby4j:
+    image: sandokandias/stubby4j-docker
+    ports:
+      - "8883:8883"
+    environment:
+      STUBBY_PORT: 8883
+    volumes:
+      - ./data/stubby/integrations.yml:/usr/local/stubby.yml
     networks:
       - custom
 

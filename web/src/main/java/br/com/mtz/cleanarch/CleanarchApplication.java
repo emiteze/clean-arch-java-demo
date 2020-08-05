@@ -1,4 +1,4 @@
-package br.com.mtz.cleanarch.web;
+package br.com.mtz.cleanarch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -11,6 +11,19 @@
 
 	<artifactId>web</artifactId>
 
+	<dependencies>
+		<dependency>
+			<groupId>br.com.mtz</groupId>
+			<artifactId>api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>br.com.mtz</groupId>
+			<artifactId>infrastructure</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
