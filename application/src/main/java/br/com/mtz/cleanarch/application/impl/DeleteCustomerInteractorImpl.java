@@ -4,7 +4,6 @@ import br.com.mtz.cleanarch.application.DeleteCustomerInteractor;
 import br.com.mtz.cleanarch.domain.Customer;
 import br.com.mtz.cleanarch.domain.exception.NotFoundException;
 import br.com.mtz.cleanarch.domain.repository.CustomerRepository;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 

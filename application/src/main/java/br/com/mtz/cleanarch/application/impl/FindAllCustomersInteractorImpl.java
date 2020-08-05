@@ -7,7 +7,6 @@ import br.com.mtz.cleanarch.domain.Customer;
 import br.com.mtz.cleanarch.domain.Page;
 import br.com.mtz.cleanarch.domain.PageRequest;
 import br.com.mtz.cleanarch.domain.repository.CustomerRepository;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.stream.Collectors;

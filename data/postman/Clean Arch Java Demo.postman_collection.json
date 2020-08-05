@@ -151,7 +151,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"cpf\": \"10839869614\"\n}",
+					"raw": "{\"cpf\":\"10839869614\"}",
 					"options": {
 						"raw": {
 							"language": "json"

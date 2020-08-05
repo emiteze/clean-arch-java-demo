@@ -1,4 +1,4 @@
-package br.com.mtz.cleanarch.infrastructure;
+package br.com.mtz.cleanarch.infrastructure.repository;
 
 import br.com.mtz.cleanarch.domain.Customer;
 import br.com.mtz.cleanarch.domain.Page;
@@ -6,9 +6,11 @@ import br.com.mtz.cleanarch.domain.PageRequest;
 import br.com.mtz.cleanarch.domain.repository.CustomerRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import javax.inject.Inject;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;

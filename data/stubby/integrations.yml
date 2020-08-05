@@ -4,9 +4,7 @@
     headers:
       content-type: application/json
     post: >
-      {
-          "cpf": "(1.*)"
-      }
+      {"cpf":"(1.*)"}
 
   response:
     status: 200
@@ -23,9 +21,7 @@
     headers:
       content-type: application/json
     post: >
-      {
-          "cpf": "(2.*)"
-      }
+      {"cpf":"(2.*)"}
 
   response:
     status: 200

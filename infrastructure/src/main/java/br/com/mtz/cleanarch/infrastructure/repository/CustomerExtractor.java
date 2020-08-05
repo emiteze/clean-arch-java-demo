@@ -1,10 +1,9 @@
-package br.com.mtz.cleanarch.infrastructure;
+package br.com.mtz.cleanarch.infrastructure.repository;
 
 import br.com.mtz.cleanarch.domain.Customer;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
