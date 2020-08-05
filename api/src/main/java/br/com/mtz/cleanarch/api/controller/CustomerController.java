@@ -35,31 +35,31 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private CustomerResponse create(@RequestBody CreateCustomerRequest request) {
+    public CustomerResponse create(@RequestBody CreateCustomerRequest request) {
         return this.createCustomerInteractor.execute(request);
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    private void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") String id) {
         this.deleteCustomerInteractor.execute(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    private PageResponse<CustomerResponse> find(PageRequest pageRequest) {
+    public PageResponse<CustomerResponse> find(PageRequest pageRequest) {
         return findAllCustomersInteractor.execute(pageRequest);
     }
 
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    private CustomerResponse find(@PathVariable("id") String id) {
+    public CustomerResponse find(@PathVariable("id") String id) {
         return this.findCustomerInteractor.execute(id);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    private CustomerResponse update(@PathVariable("id") String id, @RequestBody UpdateCustomerRequest request) {
+    public CustomerResponse update(@PathVariable("id") String id, @RequestBody UpdateCustomerRequest request) {
         return this.updateCustomerInteractor.execute(id, request);
     }
 
