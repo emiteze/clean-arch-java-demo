@@ -29,7 +29,8 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
           ECR_REPOSITORY: sample-jobs
-        run: build . -t $ECR_REGISTRY/$ECR_REPOSITORY:v1
+        with:
+          args: build . -t $ECR_REGISTRY/$ECR_REPOSITORY:v1
     
   docker_push:
     runs-on: ubuntu-latest
@@ -49,4 +50,5 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
           ECR_REPOSITORY: sample-jobs
-        run: push $ECR_REGISTRY/$ECR_REPOSITORY:v1
+        with:
+          args: push $ECR_REGISTRY/$ECR_REPOSITORY:v1

@@ -41,4 +41,5 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
           ECR_REPOSITORY: sample-steps
-        run: push $ECR_REGISTRY/$ECR_REPOSITORY:v1
+        with: 
+          args: push $ECR_REGISTRY/$ECR_REPOSITORY:v1
