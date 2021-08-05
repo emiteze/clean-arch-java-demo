@@ -25,7 +25,8 @@ jobs:
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
           ECR_REPOSITORY: sample-steps
-        run: build . -t $ECR_REGISTRY/$ECR_REPOSITORY:v1
+        with:
+          args: build . -t $ECR_REGISTRY/$ECR_REPOSITORY:v1
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
