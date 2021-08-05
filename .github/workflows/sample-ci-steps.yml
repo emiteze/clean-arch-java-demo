@@ -9,10 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up GraalVM
-        uses: DeLaGuardo/setup-graalvm@master
-        with:
-          graalvm-version: '21.0.0.java11'
       - uses: actions/cache@v1
         with:
           path: ~/.m2/repository
@@ -25,6 +21,7 @@ jobs:
         run: mvn -B clean install
 
       - name: Build docker image
+        uses: docker://docker:dind
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
           ECR_REPOSITORY: sample-steps
@@ -39,7 +36,8 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Build docker image
+      - name: Publish docker image
+        uses: docker://docker:dind
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
           ECR_REPOSITORY: sample-steps

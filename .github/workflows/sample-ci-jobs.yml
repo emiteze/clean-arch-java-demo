@@ -5,14 +5,10 @@ on:
     branches: [ jobs ]
 
 jobs:
-  build_and_push_prerelease:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up GraalVM
-        uses: DeLaGuardo/setup-graalvm@master
-        with:
-          graalvm-version: '21.0.0.java11'
       - uses: actions/cache@v1
         with:
           path: ~/.m2/repository
@@ -26,9 +22,10 @@ jobs:
   
   docker_build:
     runs-on: ubuntu-latest
-    container: docker:dind
+    needs: build
     steps:
       - name: Build docker image
+        uses: docker://docker:dind
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
           ECR_REPOSITORY: sample-jobs
@@ -36,7 +33,7 @@ jobs:
     
   docker_push:
     runs-on: ubuntu-latest
-    container: docker:dind
+    needs: docker_build
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -47,7 +44,8 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      - name: Build docker image
+      - name: Publish docker image
+        uses: docker://docker:dind
         env:
           ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
           ECR_REPOSITORY: sample-jobs
