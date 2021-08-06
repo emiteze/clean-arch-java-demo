@@ -26,11 +26,8 @@ jobs:
     steps:
       - name: Build docker image
         uses: docker://docker:dind
-        env:
-          ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-          ECR_REPOSITORY: sample-jobs
         with:
-          args: build . -t $ECR_REGISTRY/$ECR_REPOSITORY:v1
+          args: build . -t ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
     
   docker_push:
     runs-on: ubuntu-latest
@@ -47,8 +44,5 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Publish docker image
         uses: docker://docker:dind
-        env:
-          ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-          ECR_REPOSITORY: sample-jobs
         with:
-          args: push $ECR_REGISTRY/$ECR_REPOSITORY:v1
+          args: push ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1

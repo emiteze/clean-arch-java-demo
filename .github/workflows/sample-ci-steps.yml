@@ -22,11 +22,8 @@ jobs:
 
       - name: Build docker image
         uses: docker://docker:dind
-        env:
-          ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-          ECR_REPOSITORY: sample-steps
         with:
-          args: build . -t $ECR_REGISTRY/$ECR_REPOSITORY:v1
+          args: build . -t ${{ secrets.AWS_ECR_REGISTRY }}/sample-steps:v1
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -39,8 +36,5 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
       - name: Publish docker image
         uses: docker://docker:dind
-        env:
-          ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-          ECR_REPOSITORY: sample-steps
         with: 
-          args: push $ECR_REGISTRY/$ECR_REPOSITORY:v1
+          args: push ${{ secrets.AWS_ECR_REGISTRY }}/sample-steps:v1
