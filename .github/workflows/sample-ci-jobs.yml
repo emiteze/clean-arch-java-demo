@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v1
@@ -19,20 +19,31 @@ jobs:
       - name: Build with Maven
         working-directory: .
         run: mvn clean install
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/web/target
+          key: jar-folder
   
   docker_build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: build
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: ~/web/target
+          key: jar-folder
       - name: Build docker image
         uses: docker://docker:dind
         with:
           args: build . -t ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
     
   docker_push:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: docker_build
     steps:
+      - uses: actions/checkout@v2
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
