@@ -44,5 +44,8 @@ jobs:
         username: AWS
         password: ${{ needs.get-aws-password.outputs.ecr_pwd }}
     steps:
+      - name: Login docker
+        with:
+          entrypoint: /entrypoint.sh
       - name: Publish docker image
         run: docker push ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
