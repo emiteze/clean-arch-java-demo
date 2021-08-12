@@ -45,4 +45,4 @@ jobs:
         password: ${{ needs.get-aws-password.outputs.ecr_pwd }}
     steps:
       - name: Publish docker image
-        run: push ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
+        run: docker push ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
