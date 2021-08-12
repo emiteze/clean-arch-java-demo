@@ -5,8 +5,18 @@ on:
     branches: [ jobs ]
 
 jobs:
+  get-aws-password:
+    runs-on: self-hosted
+    outputs:
+      ecr_pwd: ${{ steps.step1.outputs.ecr_pwd }}
+    steps:
+      - id: step1
+        run: |
+          ECR_PWD=`aws ecr get-login-password --region us-east-1` 
+          echo "::set-output name=ecr_pwd::$ECR_PWD"
   build:
     runs-on: self-hosted
+    needs: get-aws-password
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v1
@@ -41,20 +51,12 @@ jobs:
     
   docker_push:
     runs-on: self-hosted
-    needs: docker_build
+    needs: [docker_build, get-aws-password]
+    container:
+      image: 475383224204.dkr.ecr.us-east-1.amazonaws.com/step-image-docker:latest
+      credentials:
+        username: AWS
+        password: ${{ needs.get-aws-password.outputs.ecr_pwd }}
     steps:
-      - uses: actions/checkout@v2
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: us-east-1
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
       - name: Publish docker image
-        uses: docker://docker:dind
-        with:
-          args: push ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
+        run: push ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
