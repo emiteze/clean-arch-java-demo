@@ -30,20 +30,6 @@ jobs:
         working-directory: .
         run: mvn clean install
 
-      - uses: actions/cache@v1
-        with:
-          path: ~/web/target
-          key: jar-folder
-  
-  docker_build:
-    runs-on: self-hosted
-    needs: build
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
-        with:
-          path: ~/web/target
-          key: jar-folder
       - name: Build docker image
         uses: docker://docker:dind
         with:
@@ -51,7 +37,7 @@ jobs:
     
   docker_push:
     runs-on: self-hosted
-    needs: [docker_build, get-aws-password]
+    needs: [build,get-aws-password]
     container:
       image: 475383224204.dkr.ecr.us-east-1.amazonaws.com/step-image-docker:latest
       credentials:
