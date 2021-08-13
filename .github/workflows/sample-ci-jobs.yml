@@ -45,6 +45,6 @@ jobs:
         password: ${{ needs.get-aws-password.outputs.ecr_pwd }}
     steps:
       - name: Login docker
-        run: docker login --username AWS --password-stdin 475383224204.dkr.ecr.us-east-1.amazonaws.com
+        run: docker login --username AWS --password ${{ needs.get-aws-password.outputs.ecr_pwd }} 475383224204.dkr.ecr.us-east-1.amazonaws.com
       - name: Publish docker image
         run: docker push ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
