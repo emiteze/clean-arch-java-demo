@@ -14,6 +14,7 @@ jobs:
         run: |
           ECR_PWD=`aws ecr get-login-password --region us-east-1` 
           echo "::set-output name=ecr_pwd::$ECR_PWD"
+
   build:
     runs-on: self-hosted
     needs: get-aws-password
@@ -34,10 +35,22 @@ jobs:
         uses: docker://docker:dind
         with:
           args: build . -t ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
-    
-  push:
+
+  docker_build:
     runs-on: self-hosted
     needs: [build,get-aws-password]
+    container:
+      image: 475383224204.dkr.ecr.us-east-1.amazonaws.com/step-image-docker:latest
+      credentials:
+        username: AWS
+        password: ${{ needs.get-aws-password.outputs.ecr_pwd }}
+    steps:
+      - name: Publish docker image
+        run: args: build . -t ${{ secrets.AWS_ECR_REGISTRY }}/sample-jobs:v1
+
+  docker_push:
+    runs-on: self-hosted
+    needs: [docker_build,get-aws-password]
     container:
       image: 475383224204.dkr.ecr.us-east-1.amazonaws.com/step-image-docker:latest
       credentials:
