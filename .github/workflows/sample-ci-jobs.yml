@@ -37,7 +37,7 @@ jobs:
     container:
       image: 475383224204.dkr.ecr.us-east-1.amazonaws.com/step-image-docker-build:latest
       credentials:
-        username: AWS
+        username: ${{ secrets.AWS_ECR_REGISTRY_USERNAME }}
         password: ${{ needs.get-aws-password.outputs.ecr_pwd }}
       env:
         REGISTRY_URL: ${{ secrets.AWS_ECR_REGISTRY }}
@@ -54,12 +54,12 @@ jobs:
     container:
       image: 475383224204.dkr.ecr.us-east-1.amazonaws.com/step-image-docker-push:latest
       credentials:
-        username: AWS
+        username: ${{ secrets.AWS_ECR_REGISTRY_USERNAME }}
         password: ${{ needs.get-aws-password.outputs.ecr_pwd }}
       env:
         REGISTRY_URL: ${{ secrets.AWS_ECR_REGISTRY }}
         REGISTRY_USERNAME: ${{ secrets.AWS_ECR_REGISTRY_USERNAME }}
-        REGISTRY_PASSWORD: ${{ secrets.AWS_ECR_REGISTRY_PASSWORD }}
+        REGISTRY_PASSWORD: ${{ needs.get-aws-password.outputs.ecr_pwd }}
         REPOSITORY_NAME: sample-jobs
         IMAGE_TAG: v1
     steps:
